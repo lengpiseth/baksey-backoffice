@@ -16,6 +16,8 @@
     "prefer-stable": true,
     "require": {
         "php"                                   : ">=5.4.0",
+        "ext-intl"                              : "*",
+        "ext-mongo"                             : "*",
         "symfony/symfony"                       : "~2.8",
         "symfony/swiftmailer-bundle"            : "~2.3",
         "symfony/monolog-bundle"                : "~2.4",
