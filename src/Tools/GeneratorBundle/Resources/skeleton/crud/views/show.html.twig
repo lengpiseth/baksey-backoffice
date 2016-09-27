@@ -1,0 +1,56 @@
+{{ "{% block body_id '"~ document ~"' %}" }}
+
+{{ "{% block content %}" }}
+    <section class="content-header">
+        <h1>{{ document }}</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Admin</a></li>
+            <li><a href="#">{{ document }}</a></li>
+            <li class="active">Document Name</li>
+        </ol>
+    </section >
+
+    <section class="content">
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Show</h3>
+                    </div>
+
+                    <div class="box-body">
+                        <table class="record_properties table">
+                            <tbody>
+                            {%- for field, metadata in fields %}
+
+                                <tr>
+                                    <th>{{ field|capitalize }}</th>
+
+                                    {%- if metadata.type in ['date', 'datetime'] %}
+
+                                        <td>{{ '{{ document.'~ field|replace({'_': ''}) ~'|date(\'Y-m-d H:i:s\') }}' }}</td>
+
+                                    {%- else %}
+
+                                        <td>{{ '{{ document.'~ field|replace({'_': ''}) ~' }}' }}</td>
+
+                                    {%- endif %}
+
+                                </tr>
+
+                            {%- endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="box-footer">
+                        {% set hide_edit, hide_duplicate, hide_delete = false, false, false %}
+                        {% include 'views/others/record_actions.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{{ "{% endblock %}" }}

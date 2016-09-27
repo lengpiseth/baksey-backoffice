@@ -1,0 +1,31 @@
+media:
+    resource: "@MediaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+rest:
+    resource: "@RestBundle/Controller/ApiBirdController.php"
+    type:     rest
+    prefix:   /api/v0.1/bird
+
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+core:
+    resource: "@CoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+core_user:
+    resource: "@UserBundle/Resources/config/security_all.yml"
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix: /api/doc

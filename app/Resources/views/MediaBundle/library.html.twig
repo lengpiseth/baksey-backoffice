@@ -1,0 +1,29 @@
+{% import ':macro:format_byte.html.twig' as format %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="library-grid dropzone-previews">
+            {% for media in medias %}
+                <div class="grid">
+                    <div class="gridInner">
+                        <img
+                                alt="{{ media.fileName }}"
+                                src="{{ path('media_view', {id: media.id}) }}"/>
+                        <div class="titleGrid" title="{{ media.fileName }}" data-media-id="{{ media.id }}">{{ media.fileName }}</div>
+                        <div class="dz-remove dz-remove-server" data-dz-remove data-remove-url="{{ path('admin_media_delete', {id: media.id}) }}">Remove</div>
+                        <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+                        <div class="select-box">&nbsp;</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 text-center">
+        <button type="button" class="btn btn-default btn-lg load-more-media" title="Load More Image">
+            <i class="fa fa-cog"></i>&nbsp; Load More
+        </button>
+    </div>
+</div>

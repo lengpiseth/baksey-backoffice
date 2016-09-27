@@ -1,0 +1,86 @@
+{% trans_default_domain 'general' %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <title>{{ project_title }} | {{ 'admin_title'|trans }}</title>
+
+    <link rel="stylesheet" href="{{ asset("assets/css/security-vendor.css") }}">
+    <style type="text/css">
+
+        input[type=checkbox], input[type=radio] {
+            position: relative !important;
+            border: 1px solid #b4b9be;
+            background: #fff;
+            color: #555;
+            clear: none;
+            cursor: pointer;
+            display: inline-block;
+            line-height: 0;
+            height: 16px;
+            margin: -4px 4px 0 0;
+            outline: 0 !important;
+            padding: 0 !important;
+            text-align: center;
+            vertical-align: middle;
+            width: 16px;
+            min-width: 16px;
+            -webkit-appearance: none;
+            -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+            -webkit-transition: .05s border-color ease-in-out;
+            transition: .05s border-color ease-in-out
+        }
+        input[type=checkbox]:checked:before,
+        input[type=radio]:checked:before {
+            float: left;
+            display: inline-block;
+            vertical-align: middle;
+            width: 14px;
+            outline: 0 !important;
+            font: 400 21px/1 dashicons;
+            -webkit-font-smoothing: antialiased;
+        }
+        input[type=checkbox]:checked:before {
+            content: "\2714";
+            margin: -2px 0 0 -1px;
+            color: #1e8cbe
+        }
+        input[type=radio]:checked:before {
+            content: "\2022";
+            text-indent: -9999px;
+            -webkit-border-radius: 50px;
+            border-radius: 50px;
+            font-size: 24px;
+            width: 6px;
+            height: 6px;
+            margin: 4px;
+            line-height: 16px;
+            background-color: #1e8cbe
+        }
+    </style>
+</head>
+<body class="hold-transition {% block admin_body_class %}{% endblock %}" style="background: url('{{ asset('assets/image/red_bird-wallpaper-1920x1080.jpg') }}') center center fixed;">
+
+{% block session_message %}
+{% if app.request.hasPreviousSession %}
+    {#<div class="lockscreen-wrapper">#}
+        {#{% for type, messages in app.session.flashbag.all() %}#}
+            {#{% for message in messages %}#}
+                {#<div class="flash-{{ type }} lockscreen-logo">#}
+                    {#{{ message }}#}
+                {#</div>#}
+            {#{% endfor %}#}
+        {#{% endfor %}#}
+    {#</div>#}
+{% endif %}
+{% endblock %}
+
+{% block fos_user_content %}{% endblock fos_user_content %}
+{% include '@User/Resetting/footer.html.twig' %}
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends '::base-admin.html.twig' %}
+{% block body_id 'media-library' %}
+
+{% block flash_message '' %}
+
+{% block section_header %}
+    <h1>Media <small>New</small></h1>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div id="dropzone" class="col-sm-12">
+            {{ form_start(form, {'attr' : {'id':'my-dropzone', 'class':'dropzone'}}) }}
+                <div class="dz-default dz-message">
+                    <div class="dz-icon icon-wrap icon-circle icon-wrap-md">
+                        <i class="fa fa-cloud-upload fa-3x"></i>
+                    </div>
+                    <div>
+                        <p class="dz-text">Drop files to upload</p>
+                        <p class="text-muted">or click to pick manually</p>
+                        <p class="text-muted">Maximum file size: {{ uploadMaxFilesize }}</p>
+                    </div>
+                </div>
+                {#{{ form_widget(form.image) }}#}
+                {#{{ form_widget(form.submit) }}#}
+            {{ form_end(form) }}
+        </div>
+
+        <div class="col-sm-12">
+            <div class="library-grid dropzone-previews">
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

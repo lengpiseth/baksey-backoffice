@@ -1,0 +1,227 @@
+{% extends '::base-admin.html.twig' %}
+{% block body_id 'post-new' %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% form_theme form.photos _self %}
+
+{% macro photoCollectionPrototype(formData) %}
+{% spaceless %}
+    <div class="input-group">
+        <span class="input-group-btn" data-id="__name__" data-toggle="tooltip" data-placement="right" title="Click for media" data-modal="media-modal">
+            <button type="button" class="btn btn-default btn-flat media-modal" title="Media"><i class="fa fa-image"></i></button>
+        </span>
+        {{ form_widget(formData) }}
+    </div>
+{% endspaceless %}
+{% endmacro %}
+
+{% block form_row -%}
+    {% spaceless %}
+    <div class="input-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        <span class="input-group-btn" data-id="{{ form.vars.name }}" data-toggle="tooltip" data-placement="right" title="Click for media" data-modal="media-modal">
+            <button type="button" class="btn btn-default btn-flat media-modal" title="Media"><i class="fa fa-image"></i></button>
+        </span>
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+    {% endspaceless %}
+{%- endblock form_row %}
+
+{% block section_header %}
+    <h1>Bird <small>New</small></h1>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {{ form_start(form) }}
+        <div class="col-sm-8">
+            <div class="box box-solid">
+                <div class="box-header">
+                    <h3 class="box-title">Bird</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.knownAs) }}
+                            {{ form_row(form.scientificName) }}
+                            {{ form_row(form.description) }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ form_row(form.nameInKhmer) }}
+                            {{ form_row(form.knownAsInKhmer) }}
+                            {{ form_row(form.scientificNameInKhmer) }}
+                            {{ form_row(form.descriptionInKhmer) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-solid">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div id="{{ form.photos.vars.id }}" class="form-group" data-prototype="{{ _self.photoCollectionPrototype(form.photos.vars.prototype)|e }}">
+                                {{ form_label(form.photos) }}
+                                {{ form_widget(form.photos) }}
+                                <div>
+                                    <br />
+                                    <button type="button" class="btn btn-default btn-sm add_photo_button">Add a photo</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="box box-solid">
+                        <div class="box-header">
+                            <h3 class="box-title">Meta Data</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                        </div>
+                        <div class="box-footer clearfix">
+                            {% if document.id %}
+                            <a href="{{ path('admin_bird_delete', {'id': document.id}) }}" class="btn btn-danger btn-sm">Delete</a>
+                            {% endif %}
+                            <button type="submit" id="bird_form_submitBtn" class="btn btn-success pull-right btn">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="box box-solid">
+                        <div class="box-body">
+                            {{ form_row(form.kingdom) }}
+                            {{ form_row(form.phylum) }}
+                            {{ form_row(form.class) }}
+                            {{ form_row(form.class) }}
+                            {{ form_row(form.family) }}
+                            {{ form_row(form.genus) }}
+                            {{ form_row(form.species) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block modal %}
+    <div id="media-modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-wide">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body library-grid">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-lg load-more-media" title="Load More Image">
+                        <i class="fa fa-cog"></i>&nbsp; Load More
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+{% endblock %}
+
+{% block custom_javascript %}
+
+    {% spaceless %}
+    <script type="application/javascript">
+        var $collectionHolder;
+        var $newLinkContainer;
+        var $addPhotoButton;
+
+        $(document).ready(function () {
+            $collectionHolder   = $('div#{{ form.photos.vars.id }}');
+            $addPhotoButton     = $('.add_photo_button', $collectionHolder);
+            $newLinkContainer   = $addPhotoButton.parent();
+            $collectionHolder.data('index', $collectionHolder.find('input').length);
+
+            $collectionHolder.find('div.input-group').each(function () {
+                addPhotoFormDeleteLink($(this));
+            });
+
+            $addPhotoButton.on('click', function (e) {
+                e.preventDefault();
+                addPhotoForm($collectionHolder, $newLinkContainer);
+            });
+
+            function addPhotoForm($collectionHolder, $newLinkContainer) {
+                var prototype   = $collectionHolder.data('prototype');
+                var index       = $collectionHolder.data('index');
+                var newForm     = $(prototype.replace(/__name__/g, index));
+//                var inputBox    = $('input[type="text"]', newForm);
+                var addOnBox    = $('.input-group-btn', newForm);
+
+                $collectionHolder.data('index', index + 1);
+                $newLinkContainer.before(newForm);
+                addOnBox.on('click', _showModalHandler);
+
+                addPhotoFormDeleteLink(newForm);
+            }
+
+            function addPhotoFormDeleteLink($photoFormDiv){
+                var $removeFormA = $('<span class="input-group-btn"><button type="button" class="btn btn-danger btn-flat" title="Remove"><i class="fa fa-times"></i></button></span>');
+                $photoFormDiv.append($removeFormA);
+
+                $removeFormA.on('click', function (e) {
+                    e.preventDefault();
+                    $photoFormDiv.remove();
+                });
+            }
+
+            var kingdoms    = {{ autoCompleteList.kingdomList|json_encode|raw }};
+            var phylums     = {{ autoCompleteList.phylumList|json_encode|raw }};
+            var classes     = {{ autoCompleteList.classList|json_encode|raw }};
+            var families    = {{ autoCompleteList.familyList|json_encode|raw }};
+            var genuses     = {{ autoCompleteList.genusList|json_encode|raw }};
+            var species     = {{ autoCompleteList.speciesList|json_encode|raw }};
+
+            $('#{{ form.kingdom.vars.id }}').autocomplete({
+                lookup: kingdoms
+            });
+
+            $('#{{ form.phylum.vars.id }}').autocomplete({
+                lookup: phylums
+            });
+
+            $('#{{ form.class.vars.id }}').autocomplete({
+                lookup: classes
+            });
+
+            $('#{{ form.family.vars.id }}').autocomplete({
+                lookup: families
+            });
+
+            $('#{{ form.genus.vars.id }}').autocomplete({
+                lookup: genuses
+            });
+
+            $('#{{ form.species.vars.id }}').autocomplete({
+                lookup: species
+            });
+        });
+    </script>
+    {% endspaceless %}
+{% endblock %}

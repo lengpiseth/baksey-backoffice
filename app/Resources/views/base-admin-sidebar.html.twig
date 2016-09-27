@@ -1,0 +1,64 @@
+
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li class="header text-uppercase">Main Menu</li>
+            <li class="treeview {% if 'bird' in app.request.get('_route') %}active{% endif %}">
+                <a href="#">
+                    <i class="fa fa-twitter"></i>
+                    <span>Bird</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{% if 'bird_index' in app.request.get('_route') %}active{% endif %}"><a href="{{ path('admin_bird_index') }}"><i class="fa fa-circle-o"></i> All Birds</a></li>
+                    <li class="{% if 'bird_new' in app.request.get('_route') %}active{% endif %}"><a href="{{ path('admin_bird_new') }}"><i class="fa fa-circle-o"></i> Add New</a></li>
+                </ul>
+            </li>
+            <li class="treeview {% if 'post' in app.request.get('_route') %}active{% endif %}">
+                <a href="#">
+                    <i class="fa fa-newspaper-o"></i>
+                    <span>Post</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{% if 'post_index' in app.request.get('_route') %}active{% endif %}"><a href="{{ path('admin_post_index') }}"><i class="fa fa-circle-o"></i> All Post</a></li>
+                    <li class="{% if 'post_new' in app.request.get('_route') %}active{% endif %}"><a href="{{ path('admin_post_new') }}"><i class="fa fa-circle-o"></i> Add New</a></li>
+                </ul>
+            </li>
+            <li class="treeview {% if 'media' in app.request.get('_route') %}active{% endif %}">
+                <a href="#">
+                    <i class="fa fa-camera"></i>
+                    <span>Media</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{% if 'media_index' in app.request.get('_route') %}active{% endif %}"><a href="{{ path('admin_media_index') }}"><i class="fa fa-circle-o"></i> Library</a></li>
+                </ul>
+            </li>
+            <li class="header text-uppercase">System Settings</li>
+            <li class="treeview {% if 'user' in app.request.get('_route') %}active{% endif %}">
+                <a href="#">
+                    <i class="fa fa-users"></i>
+                    <span>Users</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{% if 'user_index' in app.request.get('_route') %}active{% endif %}"><a href="#"><i class="fa fa-circle-o"></i> All Users</a></li>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <li class="{% if 'user_new' in app.request.get('_route') %}active{% endif %}"><a href="{{ path('admin_user_new') }}"><i class="fa fa-circle-o"></i> Add New</a></li>
+                    {% endif %}
+                    <li class="{% if 'user_profile' in app.request.get('_route') %}active{% endif %}"><a href="{{ path('admin_user_profile') }}"><i class="fa fa-circle"></i> Your Profile</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-wrench text-green"></i>
+                    <span>General Settings</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

@@ -1,0 +1,48 @@
+{% extends '::base-admin.html.twig' %}
+{% block body_id 'media-library' %}
+
+{% block flash_message '' %}
+
+{% block section_header %}
+    <h1>Media <small>Library</small> <button class="btn btn-xs btn-default toggle-dropzone-area">Add New</button></h1>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div id="dropzone" class="col-sm-12">
+                {{ form_start(form, {'attr' : {'id':'my-dropzone', 'class':'dropzone hide'}}) }}
+                <div class="dz-default dz-message">
+                    <div class="dz-icon icon-wrap icon-circle icon-wrap-md">
+                        <i class="fa fa-cloud-upload fa-3x"></i>
+                    </div>
+                    <div>
+                        <p class="dz-text">Drop files to upload</p>
+                        <p class="text-muted">or click to pick manually</p>
+                        <p class="text-muted">Maximum file size: {{ uploadMaxFilesize }}</p>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+        </div>
+    </div>
+    {{ render(controller('MediaBundle:AdminMedia:library', {'sortby' : sortBy, 'order':order})) }}
+{% endblock %}
+
+{% block custom_javascript %}
+{% spaceless %}
+    {{ parent() }}
+    <script type="application/javascript">
+        $(document).ready(function () {
+            $('.toggle-dropzone-area').on('click', function (e) {
+                e.preventDefault();
+                $('#my-dropzone').toggleClass('hide');
+            });
+
+            $(window).on('scroll', function (e) {
+                if($(window).scrollTop() + $(window).innerHeight() >= $(document)[0].scrollHeight) {
+                    console.log('more page loading');
+                }
+            });
+        });
+    </script>
+{% endspaceless %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block admin_body_class 'lockscreen' %}
+
+{% block fos_user_content %}
+    <div class="lockscreen-wrapper">
+        <div class="lockscreen-logo">
+            {{ 'resetting.check_email'|trans({'%email%': email}) }}
+        </div>
+    </div>
+{% endblock %}

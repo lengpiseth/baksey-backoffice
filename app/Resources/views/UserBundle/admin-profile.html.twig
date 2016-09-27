@@ -1,0 +1,31 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block section_header %}
+    <h1>User <small>Profile</small></h1>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-9">
+        {{ form_start(form) }}
+        <div class="box box-solid">
+            <div class="box-header">
+                <h3 class="box-title">{{ app.user.username }} ({{ app.user.email }})</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                {% if form.vars.errors is not empty %}
+                    {{ form_errors(form) }}
+                {% endif %}
+                {{ form_widget(form) }}
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-success pull-right">Update</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

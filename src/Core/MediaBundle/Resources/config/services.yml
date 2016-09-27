@@ -1,0 +1,4 @@
+services:
+    core.media.service:
+        class : Core\MediaBundle\Service\MediaService
+        arguments: ["@service_container"]

@@ -1,0 +1,35 @@
+{#{% trans_default_domain 'FOSUserBundle' %}#}
+
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+    <div>
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    </div>
+    <div>
+    {{ form_label(form.firstName) }}
+    {{ form_widget(form.firstName) }}
+    </div>
+    <div>
+    {{ form_label(form.lastName) }}
+    {{ form_widget(form.lastName) }}
+    </div>
+    <div>
+    {{ form_label(form.username) }}
+    {{ form_widget(form.username) }}
+    </div>
+    <div>
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email) }}
+    </div>
+    {{ form_label(form.plainPassword.first) }}
+    {{ form_widget(form.plainPassword.first) }}
+    </div>
+    <div>
+    {{ form_label(form.plainPassword.second) }}
+    {{ form_widget(form.plainPassword.second) }}
+    </div>
+    {{ form_rest(form) }} {# This renders all fields that have not yet been rendered for the given form #}
+    <div>
+        <input type="submit" value="{{ 'registration.submit'|trans }}" />
+    </div>
+</form>

@@ -1,0 +1,15 @@
+{
+    "name": "baksey-bower",
+    "dependencies": {
+        "adminlte"               : "*",
+        "bootstrap"              : "*",
+        "datatables.net"         : "*",
+        "devbridge-autocomplete" : "*",
+        "dropzone"               : "*",
+        "font-awesome"           : "*",
+        "jquery"                 : "*",
+        "jquery-ui"              : "*",
+        "jquery-cookie"          : "*",
+        "froala-editor"          : "*"
+    }
+}

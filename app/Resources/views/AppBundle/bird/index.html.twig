@@ -1,0 +1,70 @@
+{% extends '::base-admin.html.twig' %}
+{% block body_id 'bird-index' %}
+
+{% block section_header %}
+    <h1>Bird <small>List</small> <a class="btn btn-default btn-xs" href="{{ path('admin_bird_new') }}">Add New</a></h1>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-solid">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-6">{{ knp_pagination_render(documents) }}</div>
+                        <div class="col-sm-6">
+                            <form method="get" action="">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-search"></i>
+                                </div>
+                                <input class="form-control" type="text" name="search_value" value="{{ searchValue }}" placeholder="Search by name..." />
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-success btn-flat">Search</button>
+                                </span>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body">
+                {% if documents|length > 0 %}
+                    <table id="bird-list" class="table table-striped table-bordered table-hover text-left" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Kingdom</th>
+                                <th>Phylum</th>
+                                <th>Class</th>
+                                <th>Family</th>
+                                <th>Genus</th>
+                                <th>Species</th>
+                            </tr>
+                        </thead>
+                        <tbody class="records-list">
+                        {% for bird in documents %}
+                            <tr>
+                                <td>{{ bird.name }}
+                                    <div class="row-actions">
+                                        <span class="edit"><a href="{{ path('admin_bird_edit', {id:bird.id}) }}">edit</a></span>
+                                    </div>
+                                </td>
+                                <td>{{ bird.kingdom }}</td>
+                                <td>{{ bird.phylum }}</td>
+                                <td>{{ bird.class }}</td>
+                                <td>{{ bird.family }}</td>
+                                <td>{{ bird.genus }}</td>
+                                <td>{{ bird.species }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+                </div>
+                <div class="box-footer clearfix">
+                    {{ knp_pagination_render(documents) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
